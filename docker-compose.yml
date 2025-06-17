@@ -38,3 +38,7 @@ services:
         limits:
           cpus: "0.5"
           memory: "1G"
+
+volumes:
+  backend_volume:
+    driver: local
