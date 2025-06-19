@@ -1,6 +1,10 @@
 # Prepare builder
 FROM node:23.3-alpine AS builder
 RUN apk add --no-cache git
+
+# apparently this needs to be set, otherwise we an error "ERR_OSSL_EVP_UNSUPPORTED"
+ENV NODE_OPTIONS=--opessl-legacy-provider
+
 WORKDIR /app
 COPY . .
 RUN npm ci
