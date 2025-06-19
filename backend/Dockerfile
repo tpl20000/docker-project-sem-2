@@ -15,7 +15,7 @@ RUN adduser -D -g '' runner
 WORKDIR /app
 COPY --from=builder /app/main .
 USER runner
-EXPOSE 8080
+EXPOSE 8081
 
 # Run the application
 CMD ["./main"]

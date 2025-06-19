@@ -7,8 +7,9 @@ RUN apk add --no-cache git
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
 WORKDIR /app
-COPY . .
+COPY package*.json .
 RUN npm ci
+COPY . .
 
 # Build
 RUN npm run build

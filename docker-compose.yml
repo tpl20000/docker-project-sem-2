@@ -6,7 +6,9 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - app-net
     restart: unless-stopped
     read_only: true
     tmpfs:
@@ -25,6 +27,8 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "80:80"
+    networks:
+      - app-net
     depends_on:
       - backend
     restart: unless-stopped
@@ -42,3 +46,7 @@ services:
 volumes:
   backend_volume:
     driver: local
+
+networks:
+  app-net:
+    driver: bridge
