@@ -18,8 +18,6 @@ RUN npm run build
 FROM nginx:1.28-alpine
 RUN apk add --no-cache ca-certificates tzdata && update-ca-certificates
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist /usr/share/nginx/html
-# idk why but it keeps looking for js files in the wrong place, so here's a cheap "fix"
 COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 #RUN adduser -D -g '' runner
 #RUN touch /var/run/nginx.pid
