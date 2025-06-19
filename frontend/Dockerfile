@@ -3,7 +3,8 @@ FROM node:23.3-alpine AS builder
 RUN apk add --no-cache git
 
 # apparently this needs to be set, otherwise we an error "ERR_OSSL_EVP_UNSUPPORTED"
-ENV NODE_OPTIONS=--opessl-legacy-provider
+# also this is a security risk, but solving this would probably require ssl certs
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 WORKDIR /app
 COPY . .
@@ -17,6 +18,8 @@ FROM nginx:1.28-alpine
 RUN apk add --no-cache ca-certificates tzdata && update-ca-certificates
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
+# idk why but it keeps looking for js files in the wrong place, so here's a cheap "fix"
+COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 #RUN adduser -D -g '' runner
 #RUN touch /var/run/nginx.pid
 #RUN mkdir /var/cache/nginx -p
