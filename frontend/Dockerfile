@@ -16,9 +16,8 @@ RUN npm run build
 # Prepare runner
 FROM nginx:1.28-alpine
 RUN apk add --no-cache ca-certificates tzdata && update-ca-certificates
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist /usr/share/nginx/html
-#COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 #RUN adduser -D -g '' runner
 #RUN touch /var/run/nginx.pid
 #RUN mkdir /var/cache/nginx -p
