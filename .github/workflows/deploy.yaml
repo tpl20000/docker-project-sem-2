@@ -19,11 +19,15 @@ jobs:
         with:
           tags: backend:latest
           context: ./backend/
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Build Frontend Docker Image
         uses: docker/build-push-action@v4
         with:
           tags: frontend:latest
           context: ./frontend/
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Perform Trivy Scan on Backend Image
         uses: aquasecurity/trivy-action@master
         with:
