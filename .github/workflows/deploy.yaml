@@ -6,6 +6,41 @@ on:
       - main
 
 jobs:
+  build_and_lint_images:
+    name: Build and Scan Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Prepare Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build Backend Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          tags: backend:latest
+          context: ./backend/
+      - name: Build Frontend Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          tags: frontend:latest
+          context: ./frontend/
+      - name: Perform Trivy Scan on Backend Image
+        uses: aquasecurity/trivy-action@main
+        with:
+          image-ref: 'backend:latest'
+          format: 'table'
+          vuln-type: 'ALL'
+          severity: 'HIGH,CRITICAL'
+          ignore-unfixed: true
+      - name: Perform Trivy Scan on Backend Image
+        uses: aquasecurity/trivy-action@main
+        with:
+          image-ref: 'frontend:latest'
+          format: 'table'
+          vuln-type: 'ALL'
+          severity: 'HIGH,CRITICAL'
+          ignore-unfixed: true
+          
   build_and_push_to_docker_hub:
       name: Push Docker image to DockerHub
       runs-on: ubuntu-latest
