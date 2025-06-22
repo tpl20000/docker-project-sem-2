@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_lint_images:
+  build_and_scan_images:
     name: Build and Scan Docker Images
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +21,7 @@ jobs:
           context: ./backend/
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          load: true
       - name: Build Frontend Docker Image
         uses: docker/build-push-action@v4
         with:
@@ -28,6 +29,7 @@ jobs:
           context: ./frontend/
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          load: true
       - name: Perform Trivy Scan on Backend Image
         uses: aquasecurity/trivy-action@master
         with:
