@@ -29,7 +29,7 @@ jobs:
         with:
           image-ref: 'backend:latest'
           format: 'table'
-          vuln-type: 'ALL'
+          vuln-type: 'os, library'
           severity: 'HIGH,CRITICAL'
           ignore-unfixed: true
       - name: Perform Trivy Scan on Backend Image
@@ -37,7 +37,7 @@ jobs:
         with:
           image-ref: 'frontend:latest'
           format: 'table'
-          vuln-type: 'ALL'
+          vuln-type: 'os, library'
           severity: 'HIGH,CRITICAL'
           ignore-unfixed: true
           
