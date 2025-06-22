@@ -20,6 +20,12 @@ services:
           memory: "1G"
     volumes:
       - backend_volume:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080/health"]
+      interval: 1m
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
   frontend:
     build:
@@ -42,6 +48,12 @@ services:
         limits:
           cpus: "0.5"
           memory: "1G"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost"]
+      interval: 1m
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
 volumes:
   backend_volume:
