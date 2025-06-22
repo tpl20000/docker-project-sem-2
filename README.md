@@ -9,7 +9,7 @@ This is an educational project for the DevOps semester 2 course. The project inv
 4. Access the application at `http://localhost`
 
 ## Base Docker Images used
-- `alpine:3.22` for the backend
-- `nginxinc/nginx-unprivileged` for the frontend
+- `alpine:3.22` for the backend  
+- `nginxinc/nginx-unprivileged` for the frontend  
 Both images create containers with non-root users  
-Both images have healthchecks
+Both images have healthchecks  
